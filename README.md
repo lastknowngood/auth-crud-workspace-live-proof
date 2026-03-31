@@ -88,13 +88,13 @@ git status --short --ignored
   - Restart- und Redeploy-Persistenz
   - Dump, `host-restic-data-backup-run`, Restore-Cutover und Session-
     Invalidation auf dem Restore-Ziel
-- der kurze Public-Proof auf demselben Ref ist aktuell **nicht** sauber
-  abgeschlossen:
+- der enge Public-Auth-Retry auf demselben Ref ist inzwischen ebenfalls gruen:
   - `HTTPS 200`, Root-Marker, `robots.txt`, `X-Robots-Tag` und
-    `proof_mode=false` waren gruen
-  - die rote Login-Probe lief mit falschen Seed-Emails (`.com` statt
-    `.test`) und ist deshalb kein belastbarer App-Fail
-  - ein enger Retry fuer den Public-Auth-Schritt bleibt offen
+    `proof_mode=false`
+  - oeffentlicher Login mit den kanonischen proof-seeded Usern
+    `admin@example.test` und `member@example.test`
+  - HTTPS-Cookie-Contract mit `HttpOnly`, `Secure` und `SameSite=lax`
+  - korrekter Member/Admin-Split auf `/admin/users`
 - same-day fail-closed Cleanup ist danach vollstaendig gruen gelaufen
 - aktueller Steady State:
   - kein Live-Dienst
