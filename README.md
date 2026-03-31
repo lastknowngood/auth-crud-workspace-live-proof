@@ -19,8 +19,10 @@ CRUD-Pfad auf `coolify-01`.
 
 - das Repo ist lokal vorhanden
 - Git-Repo ist initialisiert
-- die Runtime- und Contract-Oberflaeche wird gerade fuer den ersten
-  privaten Proof-Ref aufgebaut
+- die Runtime-, Contract- und projektseitigen Proof-Helfer sind lokal vorhanden
+- lokale Repo-Gates fuer Tests, Ruff, Pyright und Deptry sind gruen
+- ein lokaler Docker-/Compose-PostgreSQL-Smoke ist auf diesem Rechner aktuell
+  nicht belegbar, weil `docker` fehlt
 - es gibt aktuell keinen Live-Dienst aus diesem Repo auf `coolify-01`
 - `auth.dental-school.education` hat aktuell oeffentlich weder `A` noch `AAAA`
 - es gibt aktuell keine Host-Ressourcen und keine lokalen Proof-Secrets fuer
