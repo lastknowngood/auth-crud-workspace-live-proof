@@ -12,13 +12,13 @@ CRUD-Pfad auf `coolify-01`.
 - Rollen `admin` und `member`
 - ein einzelner FastAPI-Prozess
 - `operations.backup_class: stateful-logical-dump`
-- geplanter Proof-Hostname: `auth.dental-school.education`
+- Proof-Hostname: `auth.dental-school.education`
 - Default-Endzustand des ersten Public-Proofs: Cleanup nach Evidence
 
 ## Aktueller Zustand
 
-- das Repo ist lokal vorhanden
-- Git-Repo ist initialisiert
+- das Repo ist lokal vorhanden und oeffentlich auf GitHub publiziert
+- das Git-Repo ist initialisiert
 - die Runtime-, Contract- und projektseitigen Proof-Helfer sind lokal vorhanden
 - lokale Repo-Gates fuer Tests, Ruff, Pyright und Deptry sind gruen
 - ein lokaler Docker-/Compose-PostgreSQL-Smoke ist auf diesem Rechner aktuell
@@ -75,11 +75,22 @@ git status --short --ignored
 
 ## Proof-Status
 
-- lokaler Code- und Testpfad wird aufgebaut
-- der aktuelle Deploy-Contract ist auf den ersten privaten Proof-Ref
+- lokaler Code- und Testpfad ist gruen
+- der aktuelle Deploy-Contract bleibt auf den ersten Proof-Ref
   `proof/auth-crud-workspace-live-proof-private-20260331-r1` ausgerichtet
-- der erste Host-Proof ist noch nicht gelaufen
-- der erste Public-Proof ist noch nicht gelaufen
+- der private Host-Proof auf Commit
+  `a36a70ec023d0b196591f0c5e1fe40ca21f7dc5a` war gruen:
+  - Create- und Same-Ref-Redeploy
+  - deterministischer Auth-/AuthZ-Pfad
+  - Restart- und Redeploy-Persistenz
+  - Dump, `host-restic-data-backup-run`, Restore-Cutover und Session-
+    Invalidation auf dem Restore-Ziel
+- der kurze Public-Proof auf demselben Ref war rot:
+  - `HTTPS 200`, Root-Marker, `robots.txt`, `X-Robots-Tag` und
+    `proof_mode=false` waren gruen
+  - `POST /auth/login` lieferte oeffentlich fuer `member` und `admin`
+    `401 invalid_credentials`
+- same-day fail-closed Cleanup ist danach vollstaendig gruen gelaufen
 - aktueller Steady State:
   - kein Live-Dienst
   - kein Public-DNS

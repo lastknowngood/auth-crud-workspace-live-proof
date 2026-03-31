@@ -55,4 +55,5 @@ notes:
   - PostgreSQL is the durable source of truth for users, sessions, and items.
   - The proof uses browserless auth and CRUD readbacks plus a project-owned restore readback.
   - Proof-only endpoints must be fenced before any public proof.
-  - Current steady state is: local scaffold only; no host resources, no public DNS, and no live proof yet.
+  - The first private host proof on `proof/auth-crud-workspace-live-proof-private-20260331-r1` was green, but the short public HTTPS proof was cleaned up after `POST /auth/login` returned `401 invalid_credentials`.
+  - Current steady state is: no host resources, no public DNS, and no retained local proof secrets.
