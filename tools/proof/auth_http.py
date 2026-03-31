@@ -4,6 +4,13 @@ from pathlib import Path
 
 import httpx
 
+from app.store import ADMIN_EMAIL, MEMBER_EMAIL
+
+ROLE_EMAILS = {
+    'admin': ADMIN_EMAIL,
+    'member': MEMBER_EMAIL,
+}
+
 
 def load_cookies(cookie_file: Path | None) -> dict[str, str]:
     if cookie_file is None or not cookie_file.exists():
@@ -42,12 +49,22 @@ def dump_response(response: httpx.Response) -> dict[str, object]:
     }
 
 
+def resolve_login_email(*, role: str | None, email: str | None) -> str | None:
+    if email:
+        return email
+    if role:
+        return ROLE_EMAILS[role]
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('command', choices=['login', 'me', 'items', 'admin-users', 'logout'])
     parser.add_argument('--base-url', required=True)
     parser.add_argument('--cookie-file')
-    parser.add_argument('--email')
+    email_group = parser.add_mutually_exclusive_group()
+    email_group.add_argument('--email')
+    email_group.add_argument('--role', choices=sorted(ROLE_EMAILS))
     parser.add_argument('--password')
     parser.add_argument('--https-forwarded', action='store_true')
     args = parser.parse_args()
@@ -55,11 +72,12 @@ def main() -> int:
     cookie_file = Path(args.cookie_file) if args.cookie_file else None
     with build_client(args.base_url, cookie_file, args.https_forwarded) as client:
         if args.command == 'login':
-            if not args.email or not args.password:
-                raise SystemExit('--email and --password are required for login')
+            email = resolve_login_email(role=args.role, email=args.email)
+            if not email or not args.password:
+                raise SystemExit('one of --email/--role and --password are required for login')
             response = client.post(
                 '/auth/login',
-                json={'email': args.email, 'password': args.password},
+                json={'email': email, 'password': args.password},
             )
         elif args.command == 'me':
             response = client.get('/auth/me')
@@ -77,4 +95,3 @@ def main() -> int:
 
 if __name__ == '__main__':
     raise SystemExit(main())
-

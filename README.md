@@ -70,6 +70,9 @@ git status --short --ignored
 - `GET /admin/users` ist admin-only
 - `POST /proof/reset` ist proof-only und seedet einen deterministischen
   privaten Basiszustand
+- proof-seeded User fuer browserlose Verifikation:
+  - `admin@example.test`
+  - `member@example.test`
 - `GET /healthz` read-backt Status, Store, Build-Revision und Proof-Mode
 - sichtbarer Root-Marker: `AUTH-CRUD-WORKSPACE-LIVE-PROOF OK`
 
@@ -85,11 +88,13 @@ git status --short --ignored
   - Restart- und Redeploy-Persistenz
   - Dump, `host-restic-data-backup-run`, Restore-Cutover und Session-
     Invalidation auf dem Restore-Ziel
-- der kurze Public-Proof auf demselben Ref war rot:
+- der kurze Public-Proof auf demselben Ref ist aktuell **nicht** sauber
+  abgeschlossen:
   - `HTTPS 200`, Root-Marker, `robots.txt`, `X-Robots-Tag` und
     `proof_mode=false` waren gruen
-  - `POST /auth/login` lieferte oeffentlich fuer `member` und `admin`
-    `401 invalid_credentials`
+  - die rote Login-Probe lief mit falschen Seed-Emails (`.com` statt
+    `.test`) und ist deshalb kein belastbarer App-Fail
+  - ein enger Retry fuer den Public-Auth-Schritt bleibt offen
 - same-day fail-closed Cleanup ist danach vollstaendig gruen gelaufen
 - aktueller Steady State:
   - kein Live-Dienst
