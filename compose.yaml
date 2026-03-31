@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: auth_crud_workspace_live_proof
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d auth_crud_workspace_live_proof']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    ports:
+      - '54330:5432'

@@ -1,0 +1,58 @@
+contract_version: v1
+
+lifecycle:
+  mode: live
+
+project:
+  name: auth-crud-workspace-live-proof
+  owner: lastknowngood
+  repository_url: https://github.com/lastknowngood/auth-crud-workspace-live-proof
+
+target:
+  platform_class: coolify-single-host-v1
+  host_label: coolify-01
+  environment: production
+
+exposure:
+  mode: public
+  domains:
+    - auth.dental-school.education
+
+coolify:
+  app_type: dockerfile
+  resource_name: auth-crud-workspace-live-proof
+  project_name: live-proof-tests
+
+build:
+  source_type: git
+  source_ref: proof/auth-crud-workspace-live-proof-private-20260331-r1
+  runtime_notes: single FastAPI app with DB-backed server-side sessions and role-based CRUD; PostgreSQL is the durable source of truth.
+
+state:
+  stateful: true
+  data_paths: []
+  storage_class: postgres-primary
+
+dependencies:
+  database: postgresql
+  cache: none
+  object_storage: none
+
+secrets:
+  source_of_truth: external-secret-store
+  required_secret_names:
+    - DATABASE_URL
+    - SESSION_SECRET
+    - ADMIN_BOOTSTRAP_PASSWORD
+    - MEMBER_BOOTSTRAP_PASSWORD
+
+operations:
+  healthcheck: GET /healthz
+  rollback_hint: same-day fail-closed proof path; if the private round, proof-fence, or public HTTPS redeploy goes red, remove the A record, clean up app and DB resources, clean the dump path, remove proof secrets, and return to the no-live state.
+  backup_class: stateful-logical-dump
+
+notes:
+  - PostgreSQL is the durable source of truth for users, sessions, and items.
+  - The proof uses browserless auth and CRUD readbacks plus a project-owned restore readback.
+  - Proof-only endpoints must be fenced before any public proof.
+  - Current steady state is: local scaffold only; no host resources, no public DNS, and no live proof yet.
