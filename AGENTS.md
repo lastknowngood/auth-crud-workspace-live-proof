@@ -36,6 +36,15 @@ Host-Repo.
   - den kleinsten faithful projekt-lokalen Regression-Check waehlen
   - danach den repo-lokalen Closeout-Pfad schliessen
 
+## Klarheitsregeln
+
+- `lifecycle.mode: live` ist die Contract-/Proof-Klasse, nicht automatisch ein
+  Claim fuer retained Runtime, retained DNS oder retained Host-Ressourcen.
+- Der aktuelle Zustand muss in `README.md` unter `## Aktueller Zustand` und in
+  den `notes` des Deploy-Contracts stehen.
+- Host-Evidence wird nur als Pfad ins Host-Repo referenziert; Host-Runbooks
+  werden nicht kopiert.
+
 ## Pflicht-Gates vor "fertig" oder "clean"
 
 ```powershell

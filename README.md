@@ -17,6 +17,8 @@ CRUD-Pfad auf `coolify-01`.
 
 ## Aktueller Zustand
 
+Klarstellung: `lifecycle.mode: live` beschreibt hier die Proof-/Deploy-Contract-Klasse. Ob aus diesem Repo aktuell ein Dienst, DNS oder Host-Ressourcen retained sind, steht in den folgenden Bulletpoints und in den `notes` des Deploy-Contracts.
+
 - das Repo ist lokal vorhanden und oeffentlich auf GitHub publiziert
 - das Git-Repo ist initialisiert
 - die Runtime-, Contract- und projektseitigen Proof-Helfer sind lokal vorhanden
