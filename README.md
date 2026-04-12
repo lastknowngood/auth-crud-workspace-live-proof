@@ -3,6 +3,17 @@
 Kleines separates Demo-Repo fuer einen generischen authentifizierten stateful
 CRUD-Pfad auf `coolify-01`.
 
+## Kurzstatus
+
+| Feld | Stand |
+|---|---|
+| Contract-Klasse | `lifecycle.mode: live`, historischer stateful Auth-/CRUD-Proof |
+| Aktuelle Runtime | kein Live-Dienst auf `coolify-01` |
+| Aktuelles DNS | kein `A`/`AAAA` fuer `auth.dental-school.education` |
+| Retained Ressourcen | keine Host-Ressourcen, keine lokalen Proof-Secrets |
+| Proof-/Source-Ref | `proof/auth-crud-workspace-live-proof-private-20260331-r1` auf `a36a70ec023d0b196591f0c5e1fe40ca21f7dc5a`; `main` traegt heute die Doku-Wahrheit |
+| Evidence-Locator | Host-Repo `docs/provisioning-log/2026-03.md`, Eintraege `2026-03-31` zum Auth-Proof, plus `docs/projects/index.md` |
+
 ## Charakter
 
 - `lifecycle.mode: live`
@@ -19,9 +30,8 @@ CRUD-Pfad auf `coolify-01`.
 
 Klarstellung: `lifecycle.mode: live` beschreibt hier die Proof-/Deploy-Contract-Klasse. Ob aus diesem Repo aktuell ein Dienst, DNS oder Host-Ressourcen retained sind, steht in den folgenden Bulletpoints und in den `notes` des Deploy-Contracts.
 
-- das Repo ist lokal vorhanden und oeffentlich auf GitHub publiziert
-- das Git-Repo ist initialisiert
-- die Runtime-, Contract- und projektseitigen Proof-Helfer sind lokal vorhanden
+- das Repo ist als Remote-Repo oeffentlich auf GitHub publiziert
+- Runtime, Contract und projektseitige Proof-Helfer sind im Repo vorhanden
 - lokale Repo-Gates fuer Tests, Ruff, Pyright und Deptry sind gruen
 - ein lokaler Docker-/Compose-PostgreSQL-Smoke ist auf diesem Rechner aktuell
   nicht belegbar, weil `docker` fehlt
@@ -54,6 +64,15 @@ docker compose up -d postgres
 $env:TEST_DATABASE_URL = 'postgresql://postgres:postgres@127.0.0.1:54330/auth_crud_workspace_live_proof'
 uv run pytest --cov=app -m "not integration or integration"
 ```
+
+Proof-/Live-Umgebungsvariablen laut Contract:
+
+| Variable | Zweck | Retained? |
+|---|---|---|
+| `DATABASE_URL` | primaere PostgreSQL-Verbindung | nein |
+| `SESSION_SECRET` | server-side Session-Signatur/Secret | nein |
+| `ADMIN_BOOTSTRAP_PASSWORD` | proof-seeded Admin-Login | nein |
+| `MEMBER_BOOTSTRAP_PASSWORD` | proof-seeded Member-Login | nein |
 
 Project-Closeout:
 
